@@ -1,0 +1,11 @@
+{
+  "name": "movielist-backend",
+  "version": "1.0.0",
+  "description": "A restful Api for the movie list application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Steven Byington",
+  "license": "ISC"
+}
