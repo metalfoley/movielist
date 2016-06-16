@@ -2,14 +2,18 @@
 
 var express    = require('express');
 var app        = express();
+var port       = normalizePort(process.env.PORT || 7500);
 var helmet     = require('helmet');
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
-var routes     = require('./routes.js')(express);
+var passport   = require('passport');
+var flash      = require('connect-flash');
+var morgan     = require('morgan');
+var session    = require('express-session');
 
-const uri = 'mongodb://localhost:27017/movieList';
+var configDB   = require('./config/database.js');
 
-mongoose.connect(uri, function(err, res){
+mongoose.connect(configDB.url, function(err, res){
     if(err){
         console.log('Error connecting to the database: ' + err);
     } else{
@@ -17,12 +21,22 @@ mongoose.connect(uri, function(err, res){
     }
 });
 
+// require('./config/passport')(passport); // pass passport for configuration
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = normalizePort(process.env.PORT || 7500);
+// required for passport
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+require('./routes/users.js')(express, passport);
+require('./routes/movies.js')(express);
 
 // Set up security
 app.use(helmet());
