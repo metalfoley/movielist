@@ -1,9 +1,8 @@
-module.exports = function (express) {
+module.exports = function (router) {
 
     var path     = require('path');
     var Movie    = require(path.join(__dirname, '../models/movie'));
     var moment   = require('moment');
-    var router   = express.Router();              // get an instance of the express Router
 
 // middleware to use for all requests
     router.use(function (req, res, next) {
@@ -97,5 +96,4 @@ module.exports = function (express) {
             });
         });
 
-    return router;
 };

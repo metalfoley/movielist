@@ -17,11 +17,11 @@ mongoose.connect(configDB.url, function(err, res){
     if(err){
         console.log('Error connecting to the database: ' + err);
     } else{
-        console.log('Connected to database: ' + uri);
+        console.log('Connected to database: ' + configDB.url);
     }
 });
 
-// require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -35,11 +35,10 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./routes/users.js')(express, passport);
-require('./routes/movies.js')(express);
-
 // Set up security
 app.use(helmet());
+
+var routes = require('./routes')(passport, express);
 
 function normalizePort(val) {
     var port = parseInt(val, 10);
