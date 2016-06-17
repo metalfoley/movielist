@@ -6,6 +6,13 @@ module.exports = function (passport, express) {
     router.use(function (req, res, next) {
         // do logging
         console.log('Completed ' + req.method + ' request for ' + req.originalUrl);
+
+        // Block access to endpoint if user is not logged in
+        if (!req.session.passport) {
+
+            //res.status(403).send('Forbidden');
+            //res.redirect('/login');
+        }
         next(); // make sure we go to the next routes and don't stop here
     });
 
