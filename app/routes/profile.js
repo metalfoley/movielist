@@ -1,7 +1,7 @@
 module.exports = function (router) {
 
     var path     = require('path');
-    var Profile    = require(path.join(__dirname, '../models/profile'));
+    var Profile  = require(path.join(__dirname, '../models/profile'));
     var moment   = require('moment');
 
     router.route('/profile')
