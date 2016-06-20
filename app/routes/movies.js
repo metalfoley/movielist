@@ -4,18 +4,6 @@ module.exports = function (router) {
     var Movie    = require(path.join(__dirname, '../models/movie'));
     var moment   = require('moment');
 
-// middleware to use for all requests
-    router.use(function (req, res, next) {
-        // do logging
-        console.log('Completed ' + req.method + ' request for ' + req.originalUrl);
-        next(); // make sure we go to the next routes and don't stop here
-    });
-
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-    router.get('/', function (req, res) {
-        res.json({message: 'hooray! welcome to our api!'});
-    });
-
 // more routes for our API will happen here
     router.route('/movies')
 
